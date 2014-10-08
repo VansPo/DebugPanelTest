@@ -5,29 +5,29 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-    maven { url "file://${System.getenv("ANDROID_HOME")}/extras/android/m2repository" }
+  maven { url "file://${System.getenv("ANDROID_HOME")}/extras/android/m2repository" }
 }
 
 dependencies {
-    final androidModule = project(':app')
-    testCompile androidModule
+  final androidModule = project(':app')
+  testCompile androidModule
 
-    final javaCompile = androidModule.android.applicationVariants.toList().first().javaCompile
-    testCompile javaCompile.classpath
-    testCompile javaCompile.outputs.files
-    testCompile files(androidModule.plugins.findPlugin("com.android.application").getBootClasspath())
+  final javaCompile = androidModule.android.applicationVariants.toList().first().javaCompile
+  testCompile javaCompile.classpath
+  testCompile javaCompile.outputs.files
+  testCompile files(androidModule.plugins.findPlugin("com.android.application").getBootClasspath())
 
-    testCompile 'junit:junit:4.12-beta-2'
-    testCompile 'com.squareup.assertj:assertj-android:1.0.0'
-    testCompile 'org.robolectric:robolectric:2.3'
+  testCompile 'junit:junit:4.12-beta-2'
+  testCompile 'com.squareup.assertj:assertj-android:1.0.0'
+  testCompile 'org.robolectric:robolectric:2.3'
 }
 
 tasks.withType(Test) {
-    scanForTestClasses = false
-    include "**/*Test.class"
+  scanForTestClasses = false
+  include "**/*Test.class"
 }
 
 jacocoTestReport {
-    additionalSourceDirs = files("../app/src/main/java")
-    classDirectories = files("../app/build/intermediates/classes/release")
+  additionalSourceDirs = files("../app/src/main/java")
+  classDirectories = files("../app/build/intermediates/classes/release")
 }

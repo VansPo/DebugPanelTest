@@ -7,45 +7,39 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import dagger.ObjectGraph;
 import lombok.AccessLevel;
 import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by adel on 6/7/14
  */
 public abstract class ScopedFragment extends Fragment {
-    @NotNull @Getter(AccessLevel.PROTECTED) Context     scopedContext;
-    @Nullable                               ObjectGraph objectGraph;
+  @NotNull @Getter(AccessLevel.PROTECTED) Context scopedContext;
+  @Nullable ObjectGraph objectGraph;
 
-    @NotNull protected abstract View createScopedView(@NotNull LayoutInflater inflater,
-                                                      @NotNull ViewGroup container,
-                                                      @Nullable Bundle savedInstanceState);
+  @NotNull protected abstract View createScopedView(@NotNull LayoutInflater inflater,
+      @NotNull ViewGroup container, @Nullable Bundle savedInstanceState);
 
-    @NotNull protected abstract ObjectGraph createDaggerScope(@NotNull Context activity);
+  @NotNull protected abstract ObjectGraph createDaggerScope(@NotNull Context activity);
 
-    @Override public void onAttach(@NotNull Activity activity) {
-        super.onAttach(activity);
-        scopedContext = new ScopedContextWrapper(activity, createDaggerScope(activity));
+  @Override public void onAttach(@NotNull Activity activity) {
+    super.onAttach(activity);
+    scopedContext = new ScopedContextWrapper(activity, createDaggerScope(activity));
+  }
+
+  @Override public View onCreateView(@NotNull LayoutInflater inflater,
+      @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    if (container == null) {
+      throw new AssertionError("no nulls here");
     }
+    return createScopedView(LayoutInflater.from(scopedContext), container, savedInstanceState);
+  }
 
-    @Override public View onCreateView(@NotNull LayoutInflater inflater,
-                                       @Nullable ViewGroup container,
-                                       @Nullable Bundle savedInstanceState) {
-        if (container == null) {
-            throw new AssertionError("no nulls here");
-        }
-        return createScopedView(LayoutInflater.from(scopedContext),
-                                container,
-                                savedInstanceState);
-    }
-
-    @Override public void onDetach() {
-        scopedContext = null;
-        super.onDetach();
-    }
+  @Override public void onDetach() {
+    scopedContext = null;
+    super.onDetach();
+  }
 }
