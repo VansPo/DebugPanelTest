@@ -3,7 +3,6 @@ package com.flatstack.android.dagger.modules;
 import android.content.Context;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flatstack.android.MainActivity;
-import com.flatstack.android.utils.DatabaseHelper;
 import com.flatstack.android.utils.Preferences;
 import dagger.Module;
 import dagger.Provides;
@@ -24,9 +23,5 @@ public class MainActivityScopeModule {
   @Provides @Singleton Preferences providePreferences(Context context, ObjectMapper objectMapper) {
     Esperandro.setSerializer(new JacksonSerializer(objectMapper));
     return Esperandro.getPreferences(Preferences.class, context);
-  }
-
-  @Provides @Singleton DatabaseHelper provideDatabaseHelper(Context context) {
-    return new DatabaseHelper(context);
   }
 }

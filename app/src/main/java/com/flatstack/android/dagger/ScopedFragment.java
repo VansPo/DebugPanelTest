@@ -4,33 +4,33 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import dagger.ObjectGraph;
 import lombok.AccessLevel;
 import lombok.Getter;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by adel on 6/7/14
  */
 public abstract class ScopedFragment extends Fragment {
-  @NotNull @Getter(AccessLevel.PROTECTED) Context scopedContext;
+  @NonNull @Getter(AccessLevel.PROTECTED) Context scopedContext;
   @Nullable ObjectGraph objectGraph;
 
-  @NotNull protected abstract View createScopedView(@NotNull LayoutInflater inflater,
-      @NotNull ViewGroup container, @Nullable Bundle savedInstanceState);
+  @NonNull protected abstract View createScopedView(@NonNull LayoutInflater inflater,
+      @NonNull ViewGroup container, @Nullable Bundle savedInstanceState);
 
-  @NotNull protected abstract ObjectGraph createDaggerScope(@NotNull Context activity);
+  @NonNull protected abstract ObjectGraph createDaggerScope(@NonNull Context activity);
 
-  @Override public void onAttach(@NotNull Activity activity) {
+  @Override public void onAttach(@NonNull Activity activity) {
     super.onAttach(activity);
     scopedContext = new ScopedContextWrapper(activity, createDaggerScope(activity));
   }
 
-  @Override public View onCreateView(@NotNull LayoutInflater inflater,
+  @Override public View onCreateView(@NonNull LayoutInflater inflater,
       @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     if (container == null) {
       throw new AssertionError("no nulls here");

@@ -3,6 +3,7 @@ package com.flatstack.android.dagger.modules;
 import android.app.Application;
 import android.content.Context;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import com.flatstack.android.qualifiers.CacheDir;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
@@ -13,13 +14,12 @@ import dagger.Provides;
 import java.io.File;
 import java.io.IOException;
 import javax.inject.Singleton;
-import org.jetbrains.annotations.NotNull;
 
 @Module(library = true)
 public class ApplicationScopeModule {
-  final @NotNull Application application;
+  final @NonNull Application application;
 
-  public ApplicationScopeModule(@NotNull Application application) {
+  public ApplicationScopeModule(@NonNull Application application) {
     this.application = application;
   }
 

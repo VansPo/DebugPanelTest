@@ -2,6 +2,8 @@ package com.flatstack.android.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,26 +12,22 @@ import com.flatstack.android.dagger.Dagger;
 import com.flatstack.android.dagger.ScopedFragment;
 import com.flatstack.android.dagger.modules.MainFragmentScopeModule;
 import com.flatstack.android.utils.ActionBars;
-import com.flatstack.android.utils.DatabaseHelper;
 import com.squareup.picasso.Picasso;
 import dagger.Lazy;
 import dagger.ObjectGraph;
 import javax.inject.Inject;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import rx.subjects.Subject;
 
 public class MainFragment extends ScopedFragment {
-  @Inject @NotNull Lazy<Picasso> picasso; // application scope
-  @Inject @NotNull Lazy<DatabaseHelper> databaseHelper; //activity scope
-  @Inject @NotNull Lazy<Subject<Boolean, Boolean>> truth; //fragment scope
+  @Inject @NonNull Lazy<Picasso> picasso; // application scope
+  @Inject @NonNull Lazy<Subject<Boolean, Boolean>> truth; //fragment scope
 
-  @NotNull @Override protected ObjectGraph createDaggerScope(@NotNull Context activity) {
+  @NonNull @Override protected ObjectGraph createDaggerScope(@NonNull Context activity) {
     return Dagger.getObjectGraph(getActivity()).plus(new MainFragmentScopeModule());
   }
 
-  @NotNull @Override protected View createScopedView(@NotNull LayoutInflater inflater,
-      @NotNull ViewGroup container, @Nullable Bundle savedInstanceState) {
+  @NonNull @Override protected View createScopedView(@NonNull LayoutInflater inflater,
+      @NonNull ViewGroup container, @Nullable Bundle savedInstanceState) {
     return inflater.inflate(R.layout.main, container, false);
   }
 

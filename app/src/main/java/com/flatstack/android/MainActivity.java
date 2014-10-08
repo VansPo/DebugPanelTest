@@ -5,6 +5,8 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.flatstack.android.dagger.Dagger;
@@ -19,8 +21,6 @@ import com.github.mttkay.memento.Retain;
 import dagger.ObjectGraph;
 import javax.inject.Inject;
 import lombok.Getter;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -29,11 +29,11 @@ public class MainActivity extends Activity implements MementoCallbacks, Injector
     CalligraphyConfig.initDefault(null);
   }
 
-  @Inject @NotNull Preferences preferences; // injected from activity scope
+  @Inject @NonNull Preferences preferences; // injected from activity scope
 
-  @Retain @NotNull @Getter ObjectGraph objectGraph;
+  @Retain @NonNull @Getter ObjectGraph objectGraph;
 
-  @Override protected void attachBaseContext(@NotNull Context newBase) {
+  @Override protected void attachBaseContext(@NonNull Context newBase) {
     super.attachBaseContext(new CalligraphyContextWrapper(newBase));
   }
 
@@ -56,12 +56,12 @@ public class MainActivity extends Activity implements MementoCallbacks, Injector
     objectGraph = Dagger.getObjectGraph(getApplication()).plus(new MainActivityScopeModule());
   }
 
-  @Override public boolean onCreateOptionsMenu(@NotNull Menu menu) {
+  @Override public boolean onCreateOptionsMenu(@NonNull Menu menu) {
     getMenuInflater().inflate(R.menu.main, menu);
     return true;
   }
 
-  @Override public boolean onOptionsItemSelected(@NotNull MenuItem item) {
+  @Override public boolean onOptionsItemSelected(@NonNull MenuItem item) {
     switch (item.getItemId()) {
       case android.R.id.home:
         getFragmentManager().popBackStack();

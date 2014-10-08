@@ -2,12 +2,12 @@ package com.flatstack.android.dagger;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.View;
 import dagger.ObjectGraph;
-import org.jetbrains.annotations.NotNull;
 
 public class Dagger {
-  @NotNull public static ObjectGraph getObjectGraph(@NotNull Context context) {
+  @NonNull public static ObjectGraph getObjectGraph(@NonNull Context context) {
     if (context instanceof Injector) {
       return ((Injector) context).getObjectGraph();
     }
@@ -15,19 +15,19 @@ public class Dagger {
         context.getClass().getSimpleName()));
   }
 
-  public static void inject(@NotNull Context context) {
+  public static void inject(@NonNull Context context) {
     getObjectGraph(context).inject(context);
   }
 
-  public static void inject(@NotNull View view) {
+  public static void inject(@NonNull View view) {
     getObjectGraph(view.getContext()).inject(view);
   }
 
-  public static void inject(@NotNull Fragment fragment) {
+  public static void inject(@NonNull Fragment fragment) {
     getObjectGraph(fragment.getActivity()).inject(fragment);
   }
 
-  public static void inject(@NotNull ScopedFragment fragment) {
+  public static void inject(@NonNull ScopedFragment fragment) {
     getObjectGraph(fragment.getScopedContext()).inject(fragment);
   }
 }

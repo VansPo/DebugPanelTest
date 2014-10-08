@@ -2,25 +2,25 @@ package com.flatstack.android.dagger;
 
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import dagger.ObjectGraph;
 import lombok.Getter;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by adel on 6/7/14
  */
 public class ScopedContextWrapper extends ContextWrapper implements Injector {
-  final @NotNull @Getter ObjectGraph objectGraph;
+  final @NonNull @Getter ObjectGraph objectGraph;
   @Nullable LayoutInflater inflater;
 
-  public ScopedContextWrapper(@NotNull Context base, @NotNull ObjectGraph objectGraph) {
+  public ScopedContextWrapper(@NonNull Context base, @NonNull ObjectGraph objectGraph) {
     super(base);
     this.objectGraph = objectGraph;
   }
 
-  @NotNull @Override public Object getSystemService(@NotNull String name) {
+  @NonNull @Override public Object getSystemService(@NonNull String name) {
     if (LAYOUT_INFLATER_SERVICE.equals(name)) {
       if (inflater == null) {
         inflater = LayoutInflater.from(getBaseContext()).cloneInContext(this);

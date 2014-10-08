@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'retrolambda'
+apply plugin: 'me.tatarka.holdr'
 
 ext {
   APPLICATION_ID = "com.flatstack.android"
@@ -77,14 +78,14 @@ repositories {
 }
 
 dependencies {
-  retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:1.6.0' // java 8
+  retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:1.6.2' // java 8
 
-  compile 'com.netflix.rxjava:rxjava-android:0.20.4' // asyncrony and events
+  compile "com.android.support:support-v4:$SUPPORT_LIBRARY_VERSION"
+  compile "com.android.support:support-annotations:$SUPPORT_LIBRARY_VERSION"
 
-  compile 'com.jakewharton:butterknife:5.1.2' // view injection
   compile 'com.jakewharton.timber:timber:2.4.1' // logging
 
-  compile "com.squareup.dagger:dagger:$daggerVersion" // DI
+  compile "com.squareup.dagger:dagger:$daggerVersion"
   provided "com.squareup.dagger:dagger-compiler:$daggerVersion"
 
   // proguard file generation for dagger files
@@ -92,12 +93,8 @@ dependencies {
 
   compile 'com.squareup.picasso:picasso:2.3.4' // image loading
   compile 'com.squareup.okhttp:okhttp:2.0.0' // HTTP client
-  compile 'com.squareup.retrofit:converter-jackson:1.6.1'
-  compile 'com.intellij:annotations:12.0' // @Nullable @NotNull
 
   compile 'org.projectlombok:lombok:1.14.8' // POJO boilerplate
-
-  compile 'nl.qbusict:cupboard:2.0.1' // sql boilerplate
 
   compile "com.hannesdorfmann.fragmentargs:annotation:$fragmentArgsVersion"
   provided "com.hannesdorfmann.fragmentargs:processor:$fragmentArgsVersion"
@@ -110,9 +107,14 @@ dependencies {
   compile "de.devland.esperandro:esperandro-jackson-addon:$esperandroVersion"
 
   compile 'uk.co.chrisjenx.calligraphy:calligraphy:0.6.0' // custom fonts made easy
+
+  //RX file storage
+  compile 'io.reactivex:rxandroid:0.21.0'
+  compile("au.com.gridstone:grex:1.0.0") {
+    exclude group: 'com.netflix.rxjava', module: 'rxjava-android'
+  }
 }
 
 configurations {
-  compile.exclude module: 'gson' // we prefer jackson over gson for more convinient configuration
-  compile.exclude module: 'guava' // some deps drag this monster into the final APK
+  compile.exclude module: 'guava'
 }
