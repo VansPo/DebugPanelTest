@@ -11,7 +11,7 @@ import com.flatstack.android.R;
 import com.flatstack.android.dagger.Dagger;
 import com.flatstack.android.dagger.ScopedFragment;
 import com.flatstack.android.dagger.modules.MainFragmentScopeModule;
-import com.flatstack.android.utils.ActionBars;
+import com.flatstack.android.common.ActionBars;
 import com.squareup.picasso.Picasso;
 import dagger.Lazy;
 import dagger.ObjectGraph;

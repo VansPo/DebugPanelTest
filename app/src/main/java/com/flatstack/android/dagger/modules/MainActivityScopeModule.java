@@ -2,7 +2,7 @@ package com.flatstack.android.dagger.modules;
 
 import android.content.Context;
 import com.flatstack.android.MainActivity;
-import com.flatstack.android.utils.Preferences;
+import com.flatstack.android.common.Preferences;
 import dagger.Module;
 import dagger.Provides;
 import de.devland.esperandro.Esperandro;

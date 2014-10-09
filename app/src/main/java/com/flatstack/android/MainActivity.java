@@ -14,7 +14,7 @@ import com.flatstack.android.dagger.Injector;
 import com.flatstack.android.dagger.modules.MainActivityScopeModule;
 import com.flatstack.android.fragments.MainFragment;
 import com.flatstack.android.fragments.PrefsFragment;
-import com.flatstack.android.utils.Preferences;
+import com.flatstack.android.common.Preferences;
 import com.github.mttkay.memento.Memento;
 import com.github.mttkay.memento.MementoCallbacks;
 import com.github.mttkay.memento.Retain;

@@ -1,4 +1,4 @@
-package com.flatstack.android.utils;
+package com.flatstack.android.common;
 
 import android.support.annotation.NonNull;
 import java.util.ArrayList;

@@ -3,7 +3,7 @@ package com.flatstack.android.fragments;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import com.flatstack.android.R;
-import com.flatstack.android.utils.ActionBars;
+import com.flatstack.android.common.ActionBars;
 
 public class PrefsFragment extends PreferenceFragment {
   @Override public void onCreate(Bundle savedInstanceState) {

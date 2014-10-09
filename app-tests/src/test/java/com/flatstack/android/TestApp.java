@@ -2,7 +2,7 @@ package com.flatstack.android;
 
 import android.support.annotation.NonNull;
 import com.flatstack.android.dagger.ModulesTestModule;
-import com.flatstack.android.utils.Lists;
+import com.flatstack.android.common.Lists;
 import java.util.List;
 
 public class TestApp extends App {

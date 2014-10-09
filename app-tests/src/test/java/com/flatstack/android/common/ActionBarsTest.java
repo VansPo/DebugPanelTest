@@ -1,4 +1,4 @@
-package com.flatstack.android.utils;
+package com.flatstack.android.common;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -21,12 +21,14 @@ public class ActionBarsTest {
   @Test public void testConfigure() throws Exception {
     Fragment fragment = new Fragment();
     activity.getFragmentManager().beginTransaction().add(fragment, "").commit();
-    ActionBars.configure(fragment, actionBar -> actionBar.setTitle("test"));
+    com.flatstack.android.common.ActionBars.configure(fragment,
+        actionBar -> actionBar.setTitle("test"));
     assertThat(activity.getActionBar().getTitle()).isEqualTo("test");
   }
 
   @Test public void testConfigure1() throws Exception {
-    ActionBars.configure(activity, actionBar -> actionBar.setSubtitle("fuck"));
+    com.flatstack.android.common.ActionBars.configure(activity,
+        actionBar -> actionBar.setSubtitle("fuck"));
     assertThat(activity.getActionBar().getSubtitle()).isEqualTo("fuck");
   }
 }
