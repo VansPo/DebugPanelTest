@@ -17,8 +17,8 @@ public class RobolectricGradleTestRunner extends RobolectricTestRunner {
   }
 
   @Override protected AndroidManifest getAppManifest(Config config) {
-    String manifestProperty = "../app/src/main/AndroidManifest.xml";
-    String resProperty = "../app/src/main/res";
+    String manifestProperty = "./app/src/main/AndroidManifest.xml";
+    String resProperty = "./app/src/main/res";
     return new AndroidManifest(Fs.fileFromPath(manifestProperty), Fs.fileFromPath(resProperty)) {
       @Override public int getTargetSdkVersion() {
         return MAX_SDK_SUPPORTED_BY_ROBOLECTRIC;
