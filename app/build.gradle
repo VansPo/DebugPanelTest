@@ -5,6 +5,10 @@ apply plugin: 'me.tatarka.holdr'
 ext {
   APPLICATION_ID = "com.flatstack.android"
 
+  VERSION_MAJOR = 0
+  VERSION_MINOR = 1
+  VERSION_PATCH = 0
+
   isTravis = "true".equals(System.getenv("TRAVIS"))
   preDexEnabled = "true".equals(System.getProperty("pre-dex", "true"))
 
@@ -24,8 +28,20 @@ android {
     targetSdkVersion TARGET_SDK_VERSION
 
     applicationId APPLICATION_ID
-    versionCode 1
-    versionName '0.1.0'
+    versionCode VERSION_MAJOR * 10000 + VERSION_MINOR * 1000 + VERSION_PATCH * 100
+    versionName "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}"
+
+    //by default we delete all localization except ru&en from apk
+    resConfigs "en", "ru"
+    //only hdpi+ will be added to final apk
+    resConfigs "nodpi", "hdpi", "xhdpi", "xxhdpi"
+
+    //adds version name to final apk
+    applicationVariants.all { variant ->
+      File file = variant.outputFile
+      variant.outputFile = new File(file.parent,
+          file.name.replace(".apk", "-" + defaultConfig.versionName + ".apk"))
+    }
   }
 
   productFlavors {
@@ -104,7 +120,6 @@ dependencies {
 
   provided "de.devland.esperandro:esperandro:$esperandroVersion" // shared prefs boilerplate
   compile "de.devland.esperandro:esperandro-api:$esperandroVersion"
-  compile "de.devland.esperandro:esperandro-jackson-addon:$esperandroVersion"
 
   compile 'uk.co.chrisjenx.calligraphy:calligraphy:0.6.0' // custom fonts made easy
 

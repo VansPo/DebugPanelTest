@@ -1,4 +1,4 @@
-package com.flatstack.android.qualifiers;
+package com.flatstack.android.dagger.qualifiers;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

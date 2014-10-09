@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Environment;
 import android.support.annotation.NonNull;
-import com.flatstack.android.qualifiers.CacheDir;
+import com.flatstack.android.dagger.qualifiers.CacheDir;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.picasso.OkHttpDownloader;

@@ -1,13 +1,11 @@
 package com.flatstack.android.dagger.modules;
 
 import android.content.Context;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flatstack.android.MainActivity;
 import com.flatstack.android.utils.Preferences;
 import dagger.Module;
 import dagger.Provides;
 import de.devland.esperandro.Esperandro;
-import de.devland.esperandro.serialization.JacksonSerializer;
 import javax.inject.Singleton;
 
 @Module(addsTo = ApplicationScopeModule.class,
@@ -16,12 +14,7 @@ import javax.inject.Singleton;
     },
     library = true)
 public class MainActivityScopeModule {
-  @Provides @Singleton ObjectMapper provideJackson() {
-    return new ObjectMapper();
-  }
-
-  @Provides @Singleton Preferences providePreferences(Context context, ObjectMapper objectMapper) {
-    Esperandro.setSerializer(new JacksonSerializer(objectMapper));
+  @Provides @Singleton Preferences providePreferences(Context context) {
     return Esperandro.getPreferences(Preferences.class, context);
   }
 }
