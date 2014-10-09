@@ -3,7 +3,7 @@ apply plugin: 'retrolambda'
 apply plugin: 'me.tatarka.holdr'
 
 ext {
-  APPLICATION_ID = "com.flatstack.android"
+  APPLICATION_ID = "com.todorename.android"
 
   VERSION_MAJOR = 0
   VERSION_MINOR = 1
