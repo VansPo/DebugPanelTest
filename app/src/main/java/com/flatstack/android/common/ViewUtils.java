@@ -12,6 +12,7 @@ import android.widget.TextView;
 /**
  * some useful view utils. Please keep it up to date!
  */
+@SuppressWarnings("WeakerAccess")
 public class ViewUtils {
 
   public static String extract(Editable editable) {
@@ -38,8 +39,9 @@ public class ViewUtils {
   }
 
   /**
-   * track thi issue, https://code.google.com/p/android/issues/detail?id=25416 and use this method until google reacts
-   * @param textView
+   * track thi issue, https://code.google.com/p/android/issues/detail?id=25416 and use this method
+   * until google reacts
+   *
    * @param letterSpacing do not even know what
    */
   private void applyLetterSpacing(TextView textView, int letterSpacing) {

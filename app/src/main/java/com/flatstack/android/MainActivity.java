@@ -27,7 +27,7 @@ public class MainActivity extends Activity implements MementoCallbacks, Injector
 
   @Inject @NonNull Preferences preferences; // injected from activity scope
 
-  @Retain @NonNull @Getter ObjectGraph objectGraph;
+  @Retain @Getter ObjectGraph objectGraph;
 
   @Override protected void attachBaseContext(@NonNull Context newBase) {
     super.attachBaseContext(new CalligraphyContextWrapper(newBase));
@@ -40,7 +40,12 @@ public class MainActivity extends Activity implements MementoCallbacks, Injector
   }
 
   @Override public void onLaunch() {
-    objectGraph = Dagger.getObjectGraph(getApplication()).plus(new MainActivityScopeModule());
+    objectGraph = Dagger.getObjectGraph(getApplication()).plus(new MainActivityScopeModule(this));
+  }
+
+  @Override protected void onDestroy() {
+    super.onDestroy();
+    objectGraph = null;
   }
 
   @Override public boolean onCreateOptionsMenu(@NonNull Menu menu) {
@@ -52,10 +57,8 @@ public class MainActivity extends Activity implements MementoCallbacks, Injector
     switch (item.getItemId()) {
       case android.R.id.home:
         return true;
-
       case R.id.action_settings:
         return true;
-
       default:
         return super.onOptionsItemSelected(item);
     }

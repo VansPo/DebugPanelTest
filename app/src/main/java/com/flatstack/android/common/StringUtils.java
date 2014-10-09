@@ -2,7 +2,7 @@ package com.flatstack.android.common;
 
 import java.util.List;
 
-public class StringUtils {
+@SuppressWarnings("WeakerAccess") public class StringUtils {
   public static boolean isEmpty(String s) {
     return s == null || s.trim().equals("");
   }

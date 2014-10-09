@@ -10,7 +10,7 @@ import org.robolectric.res.Fs;
  * Created by adel on 13/08/14
  */
 public class RobolectricGradleTestRunner extends RobolectricTestRunner {
-  static final int MAX_SDK_SUPPORTED_BY_ROBOLECTRIC = 18;
+  private static final int MAX_SDK_SUPPORTED_BY_ROBOLECTRIC = 18;
 
   public RobolectricGradleTestRunner(Class<?> testClass) throws InitializationError {
     super(testClass);

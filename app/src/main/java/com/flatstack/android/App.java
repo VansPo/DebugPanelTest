@@ -2,15 +2,16 @@ package com.flatstack.android;
 
 import android.app.Application;
 import android.support.annotation.NonNull;
-import com.flatstack.android.dagger.Injector;
-import com.flatstack.android.dagger.modules.ApplicationScopeModule;
 import com.flatstack.android.common.Lists;
 import com.flatstack.android.common.TimberCrashReportingTree;
+import com.flatstack.android.dagger.Injector;
+import com.flatstack.android.dagger.modules.AppModule;
 import dagger.ObjectGraph;
 import java.util.List;
 import lombok.Getter;
 import timber.log.Timber;
 
+@SuppressWarnings("WeakerAccess")
 public class App extends Application implements Injector {
   @NonNull @Getter
   final ObjectGraph objectGraph = ObjectGraph.create(getDaggerModules().toArray());
@@ -21,6 +22,6 @@ public class App extends Application implements Injector {
   }
 
   @NonNull protected List<Object> getDaggerModules() {
-    return Lists.mutableOf(new ApplicationScopeModule(this));
+    return Lists.mutableOf(new AppModule(this));
   }
 }

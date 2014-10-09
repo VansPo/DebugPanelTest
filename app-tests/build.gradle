@@ -1,8 +1,10 @@
 apply plugin: 'java'
 apply plugin: 'jacoco'
 
-sourceCompatibility = 1.8
+//noinspection GroovyUnusedAssignment
 targetCompatibility = 1.8
+//noinspection GroovyUnusedAssignment
+sourceCompatibility = 1.8
 
 repositories {
   maven { url "file://${System.getenv("ANDROID_HOME")}/extras/android/m2repository" }

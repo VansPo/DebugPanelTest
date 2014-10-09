@@ -1,9 +1,6 @@
 package com.flatstack.android;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import com.flatstack.android.dagger.Dagger;
-import com.flatstack.android.fragments.MainFragment;
 import dagger.ObjectGraph;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +18,7 @@ import static org.junit.Assert.assertTrue;
  */
 @RunWith(RobolectricGradleTestRunner.class)
 public class MainActivityTest {
-  ActivityController<MainActivity> activityController;
+  private ActivityController<MainActivity> activityController;
 
   @Before public void setUp() throws Exception {
     activityController = Robolectric.buildActivity(MainActivity.class);
@@ -30,11 +27,6 @@ public class MainActivityTest {
   @Test public void testOnCreate() throws Exception {
     MainActivity mainActivity = activityController.create().get();
     assertNotNull(mainActivity.getObjectGraph());
-
-    Fragment mainFragment =
-        mainActivity.getFragmentManager().findFragmentById(android.R.id.content);
-    assertNotNull(mainFragment);
-    assertTrue(mainFragment instanceof MainFragment);
   }
 
   @Test public void testOnLaunch() throws Exception {
@@ -46,14 +38,6 @@ public class MainActivityTest {
 
   @Test public void testOnOptionsItemSelected() throws Exception {
     MainActivity mainActivity = activityController.create().get();
-    FragmentManager fragmentManager = mainActivity.getFragmentManager();
-    fragmentManager.beginTransaction()
-        .replace(android.R.id.content, new Fragment())
-        .addToBackStack(null)
-        .commit();
-    int oldStack = fragmentManager.getBackStackEntryCount();
-
     assertTrue(mainActivity.onOptionsItemSelected(new TestMenuItem(android.R.id.home)));
-    assertTrue(fragmentManager.getBackStackEntryCount() < oldStack);
   }
 }
