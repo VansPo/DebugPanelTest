@@ -1,0 +1,140 @@
+apply plugin: 'com.android.application'
+apply plugin: 'retrolambda'
+apply plugin: 'me.tatarka.holdr'
+
+ext {
+  APPLICATION_ID = "com.todorename.android"
+
+  VERSION_MAJOR = 0
+  VERSION_MINOR = 1
+  VERSION_PATCH = 0
+
+  isTravis = "true".equals(System.getenv("TRAVIS"))
+  preDexEnabled = "true".equals(System.getProperty("pre-dex", "true"))
+
+  commitMessage = 'git log -1 --pretty=%B'.execute().text.trim()
+
+  daggerVersion = '1.2.2'
+  esperandroVersion = '2.1.0'
+  fragmentArgsVersion = '1.0.3'
+}
+
+def buildTime = new Date().format("yyyy-MM-dd'T'HH:mm'Z'", TimeZone.getTimeZone("UTC"))
+
+android {
+  compileSdkVersion TARGET_SDK_VERSION
+  buildToolsVersion BUILD_TOOLS_VERSION
+
+  defaultConfig {
+    minSdkVersion MIN_SDK_VERSION
+    targetSdkVersion TARGET_SDK_VERSION
+
+    applicationId APPLICATION_ID
+    versionCode VERSION_MAJOR * 10000 + VERSION_MINOR * 1000 + VERSION_PATCH * 100
+    versionName "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}"
+
+    buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
+
+    //by default we delete all localization except ru&en from apk
+    resConfigs "en", "ru"
+    //only hdpi+ will be added to final apk
+    resConfigs "nodpi", "hdpi", "xhdpi", "xxhdpi"
+
+    //adds version name to final apk
+    applicationVariants.all { variant ->
+      File file = variant.outputFile
+      variant.outputFile = new File(file.parent,
+          file.name.replace(".apk", "-" + defaultConfig.versionName + ".apk"))
+    }
+  }
+
+  productFlavors {
+    staging {
+      buildConfigField "String", "API_URL", "\"https://example-staging.com\""
+      applicationId "${APPLICATION_ID}.staging"
+    }
+
+    production {
+      buildConfigField "String", "API_URL", "\"https://example.com\""
+    }
+  }
+
+  //    signingConfigs {
+  //        release {
+  //            storeFile file("$rootDir/XXXX.keystore")
+  //            storePassword "XXXX"
+  //            keyAlias "XXXX"
+  //            keyPassword "XXXX"
+  //        }
+  //    }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  dexOptions {
+    preDexLibraries = preDexEnabled && !isTravis
+  }
+
+  packagingOptions {
+    exclude 'META-INF/LICENSE'
+    exclude 'META-INF/NOTICE'
+    exclude 'META-INF/services/javax.annotation.processing.Processor'
+  }
+
+  lintOptions {
+    enable 'IconExpectedSize', 'EasterEgg', 'SelectableText', 'StopShip', 'TypographyQuotes',
+        'UnusedIds'
+    disable 'InvalidPackage', 'GradleDependency'
+    warningsAsErrors true
+    lintConfig file("$projectDir/lint.xml")
+  }
+}
+
+repositories {
+  // dagger proguard generator
+  maven { url 'http://nexus.idamob.ru/content/groups/public' }
+}
+
+dependencies {
+  retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:1.6.2' // java 8
+
+  compile "com.android.support:support-v4:$SUPPORT_LIBRARY_VERSION"
+  compile "com.android.support:support-annotations:$SUPPORT_LIBRARY_VERSION"
+
+  compile 'com.jakewharton.timber:timber:2.4.1' // logging
+
+  compile "com.squareup.dagger:dagger:$daggerVersion"
+  provided "com.squareup.dagger:dagger-compiler:$daggerVersion"
+
+  // proguard file generation for dagger files
+  provided 'com.github.idamobile:dagger-proguard-helper-processor:1.0-SNAPSHOT'
+
+  compile 'com.squareup.picasso:picasso:2.3.4' // image loading
+  compile 'com.squareup.okhttp:okhttp:2.0.0' // HTTP client
+  compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0' //Needed for okhttp2.0
+
+  compile 'org.projectlombok:lombok:1.14.8' // POJO boilerplate
+
+  compile 'com.github.mttkay.memento:memento:0.2' // retaining objects in activity
+  provided 'com.github.mttkay.memento:memento-processor:0.2'
+
+  provided "de.devland.esperandro:esperandro:$esperandroVersion" // shared prefs boilerplate
+  compile "de.devland.esperandro:esperandro-api:$esperandroVersion"
+
+  compile 'uk.co.chrisjenx.calligraphy:calligraphy:0.6.0' // custom fonts made easy
+
+  //RX file storage
+  compile 'io.reactivex:rxandroid:0.21.0'
+  compile("au.com.gridstone:grex:1.0.0") {
+    exclude group: 'com.netflix.rxjava', module: 'rxjava-android'
+  }
+
+  debugCompile 'com.jakewharton.madge:madge:1.1.1'
+  debugCompile 'com.jakewharton.scalpel:scalpel:1.1.1'
+}
+
+configurations {
+  compile.exclude module: 'guava'
+}

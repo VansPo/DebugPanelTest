@@ -1,0 +1,30 @@
+buildscript {
+  repositories {
+    jcenter()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:0.13.3' // android plugin
+    classpath 'me.tatarka:gradle-retrolambda:2.4.0' // use Java 8 lambdas on android
+    classpath 'com.github.ben-manes:gradle-versions-plugin:0.5' // versions plugin
+    classpath 'me.tatarka.holdr:gradle-plugin:1.4.0' // findViewById()
+  }
+}
+
+apply plugin: 'com.github.ben-manes.versions'
+
+allprojects {
+  repositories {
+    jcenter()
+    mavenCentral()
+  }
+}
+
+// project wide version settings for all submodules
+ext {
+  MIN_SDK_VERSION = 15
+  TARGET_SDK_VERSION = 20
+  BUILD_TOOLS_VERSION = '20'
+  SUPPORT_LIBRARY_VERSION = '20.0.0'
+}
